@@ -8,21 +8,50 @@
 }
 </style>
 
+<script>
+function pullGit(repos,reposPath)
+{
+	jquery('#btn-pull-'+repos).attr('disabled','disabled') ;
+	jquery('#action-output-'+repos).html('正在执行 git pull 操作……') ;
+
+	jquery.ajax( '?c=org.opencomb.development.repos.ReposAction&only_msg_queue=1&act=pull',{
+		data: {
+			path: reposPath
+		}
+		, complete: function(jqXHR, textStatus){
+			if(textStatus=='success')
+			{
+				jquery('#action-output-'+repos).html(jqXHR.responseText) ;
+			}
+			else
+			{
+				jquery('#action-output-'+repos).html('操作遇到网络错误。') ;
+			}
+		}
+	} ) ; 
+}
+</script>
+
 <ul>
-<foreach for="$arrExtsStatus" item='arrOneExtStatus' key='sExtName'>
+<foreach for="$arrAllReposStatus" item='arrReposStatus' key='sReposName'>
 	<li>
 		<div>
-			[{=$arrOneExtStatus['type']}] {=$sExtName}: 
-			<span class="ext-status-{=$arrOneExtStatus['status']}">{=$arrOneExtStatus['status']}</span>
+			[{=$arrReposStatus['type']}] {=$sReposName}: 
+			<span class="ext-status-{=$arrReposStatus['status']}">{=$arrReposStatus['status']}</span>
 			
-			<if "!empty($arrOneExtStatus['detail'])">
-				<a href="javascript:jquery('#detail-pre-{=$sExtName}').toggle()">detail</a>
+			<if "!empty($arrReposStatus['detail'])">
+				<a href="javascript:jquery('#detail-pre-{=$sReposName}').toggle()">detail</a>
 			</if>
+			
+			<button id="btn-pull-{=$sReposName}" onclick="pullGit('{=$sReposName}','{=$arrReposStatus['path']}')">Pull</button>
 		</div>
-		<if "!empty($arrOneExtStatus['detail'])">
+		
+		<div id="action-output-{=$sReposName}"></div>
+		
+		<if "!empty($arrReposStatus['detail'])">
 		<div>
-			<pre id="detail-pre-{=$sExtName}" style="display:none">
-{=$arrOneExtStatus['detail']}
+			<pre id="detail-pre-{=$sReposName}" style="display:none">
+{=$arrReposStatus['detail']}
 			</pre>
 		</div>
 		</if>

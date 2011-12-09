@@ -20,32 +20,35 @@ class ReposStatus extends ControlPanel
 	
 	public function process()
 	{
-		$arrExtsStatus = array() ;
+		$arrAllReposStatus = array() ;
 		
-		$arrExtsStatus['framework'] = array(
-				'type' => '框架'
+		$arrAllReposStatus['framework'] = array(
+				'type' => '框架' ,
+				'path' => '/framework' ,
 		) ;
-		$this->gitStatus(FileSystem::singleton()->findFolder('/framework'),$arrExtsStatus['framework']) ;
+		$this->gitStatus(FileSystem::singleton()->findFolder('/framework'),$arrAllReposStatus['framework']) ;
 			
-		$arrExtsStatus['platform'] = array(
-				'type' => '平台'
+		$arrAllReposStatus['platform'] = array(
+				'type' => '平台' ,
+				'path' => '/' ,
 		) ;
-		$this->gitStatus(FileSystem::singleton()->findFolder('/'),$arrExtsStatus['platform']) ;
+		$this->gitStatus(FileSystem::singleton()->findFolder('/'),$arrAllReposStatus['platform']) ;
 		
 		$aExtMgr = ExtensionManager::singleton() ;
 		foreach($aExtMgr->metainfoIterator() as $aExtMeta)
 		{
 			$aExtMeta instanceof ExtensionMetainfo ;
 			
-			$sExtName = $aExtMeta->name() ;
-			$arrExtsStatus[$sExtName]['type'] = '扩展' ;
+			$sPath = $aExtMeta->installPath() ;
 			
-			$sPath = $aExtMeta->installPath() ; 
+			$sExtName = $aExtMeta->name() ;
+			$arrAllReposStatus[$sExtName]['type'] = '扩展' ;
+			$arrAllReposStatus[$sExtName]['path'] = $sPath ;
 			
 			$aInstallFolder = FileSystem::singleton()->findFolder($sPath) ;
-			$this->gitStatus($aInstallFolder,$arrExtsStatus[$sExtName]) ;
+			$this->gitStatus($aInstallFolder,$arrAllReposStatus[$sExtName]) ;
 		}
-		$this->statusView->variables()->set('arrExtsStatus',$arrExtsStatus) ;
+		$this->statusView->variables()->set('arrAllReposStatus',$arrAllReposStatus) ;
 	}
 	
 	private function gitStatus(LocalFolder $aFolder,&$arrStatus)
@@ -56,8 +59,7 @@ class ReposStatus extends ControlPanel
 			
 			if($aFolder instanceof LocalFolder)
 			{
-				$sPath = preg_replace('|^file://|','',$aFolder->url()) ;
-				chdir($sPath) ;
+				ReposAction::chdir($aFolder) ;
 				$arrStatus['detail'] = `git status -s` ;
 				$arrStatus['status'] = empty($arrStatus['detail'])? 'clean': 'modified' ;
 			}
