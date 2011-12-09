@@ -1,0 +1,33 @@
+<lib name="jquery" />
+<style>
+.ext-status-clean{
+	color: #00CC00;
+}
+.ext-status-modified{
+	color: #CC0000;
+}
+</style>
+
+<ul>
+<foreach for="$arrExtsStatus" item='arrOneExtStatus' key='sExtName'>
+	<li>
+		<div>
+			[{=$arrOneExtStatus['type']}] {=$sExtName}: 
+			<span class="ext-status-{=$arrOneExtStatus['status']}">{=$arrOneExtStatus['status']}</span>
+			
+			<if "!empty($arrOneExtStatus['detail'])">
+				<a href="javascript:jquery('#detail-pre-{=$sExtName}').toggle()">detail</a>
+			</if>
+		</div>
+		<if "!empty($arrOneExtStatus['detail'])">
+		<div>
+			<pre id="detail-pre-{=$sExtName}" style="display:none">
+{=$arrOneExtStatus['detail']}
+			</pre>
+		</div>
+		</if>
+		
+		<hr />
+	</li>
+</foreach>
+</ul>

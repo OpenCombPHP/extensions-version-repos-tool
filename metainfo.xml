@@ -1,0 +1,15 @@
+<Extension>
+
+	<name>version-repos-tool</name>
+	<version>0.1</version>
+	<title>我的扩展</title>
+	
+ 
+	<class>com.opencomb.development.repos.VersionReposTool</class>
+	<package folder="/class" namespace="com.opencomb.development.repos" />
+ 
+	<template folder="/template" />
+	
+	<publicFolder folder="/public" />
+	
+</Extension>
