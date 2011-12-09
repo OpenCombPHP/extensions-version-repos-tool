@@ -1,5 +1,5 @@
 <?php 
-namespace com\opencomb\development\repos ;
+namespace org\opencomb\development\repos ;
 
 use org\opencomb\ext\Extension ;
 

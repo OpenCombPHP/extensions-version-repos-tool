@@ -1,5 +1,5 @@
 <?php
-namespace com\opencomb\development\repos ;
+namespace org\opencomb\development\repos ;
 
 use org\jecat\framework\fs\imp\LocalFolder;
 use org\jecat\framework\fs\FileSystem;
