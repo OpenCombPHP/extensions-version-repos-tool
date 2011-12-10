@@ -20,46 +20,44 @@ class ReposStatus extends ControlPanel
 	
 	public function process()
 	{
-		$arrAllReposStatus = array() ;
-		
 		$arrAllReposStatus['framework'] = array(
 				'type' => '框架' ,
-				'path' => '/framework' ,
+				'folder' => FileSystem::singleton()->findFolder('/framework') ,
+				'title' => 'JeCat PHP Framework' ,
 		) ;
-		$this->gitStatus(FileSystem::singleton()->findFolder('/framework'),$arrAllReposStatus['framework']) ;
+		$this->gitStatus($arrAllReposStatus['framework']) ;
 			
 		$arrAllReposStatus['platform'] = array(
 				'type' => '平台' ,
-				'path' => '/' ,
+				'folder' => FileSystem::singleton()->findFolder('/') ,
+				'title' => '蜂巢' ,
 		) ;
-		$this->gitStatus(FileSystem::singleton()->findFolder('/'),$arrAllReposStatus['platform']) ;
+		$this->gitStatus($arrAllReposStatus['platform']) ;
 		
 		$aExtMgr = ExtensionManager::singleton() ;
 		foreach($aExtMgr->metainfoIterator() as $aExtMeta)
 		{
 			$aExtMeta instanceof ExtensionMetainfo ;
 			
-			$sPath = $aExtMeta->installPath() ;
-			
 			$sExtName = $aExtMeta->name() ;
 			$arrAllReposStatus[$sExtName]['type'] = '扩展' ;
-			$arrAllReposStatus[$sExtName]['path'] = $sPath ;
+			$arrAllReposStatus[$sExtName]['folder'] = FileSystem::singleton()->findFolder($aExtMeta->installPath()) ;
+			$arrAllReposStatus[$sExtName]['title'] = $aExtMeta->title() ;
 			
-			$aInstallFolder = FileSystem::singleton()->findFolder($sPath) ;
-			$this->gitStatus($aInstallFolder,$arrAllReposStatus[$sExtName]) ;
+			$this->gitStatus($arrAllReposStatus[$sExtName]) ;
 		}
 		$this->statusView->variables()->set('arrAllReposStatus',$arrAllReposStatus) ;
 	}
 	
-	private function gitStatus(LocalFolder $aFolder,&$arrStatus)
+	private function gitStatus(&$arrStatus)
 	{
-		if( FileSystem::singleton()->findFolder($aFolder->path().'/.git') )
+		if( $arrStatus['folder']->findFolder('.git') )
 		{
 			$arrStatus['repos'] = 'git' ;
 			
-			if($aFolder instanceof LocalFolder)
+			if($arrStatus['folder'] instanceof LocalFolder)
 			{
-				ReposAction::chdir($aFolder) ;
+				chdir($arrStatus['folder']->url(false)) ;
 				$arrStatus['detail'] = `git status -s` ;
 				$arrStatus['status'] = empty($arrStatus['detail'])? 'clean': 'modified' ;
 			}

@@ -30,16 +30,25 @@ class ReposAction extends ControlPanel
 		
 		self::chdir($aReposFolder) ;
 		
-		
-		echo $sOutput = 'gits pull origin master',`gits pull origin master` ;
+		$sOutput = shell_exec('git pull 2>&1') ;
 		
 		$this->createMessage(Message::notice,$sOutput) ;
 	}
 	
 	static public function chdir(LocalFolder $aFolder)
 	{
-		echo $sPath = preg_replace('|^file://|','',$aFolder->url()) ;
+		$sPath = preg_replace('|^file://|','',$aFolder->url()) ;
 		chdir($sPath) ;
+	}
+	
+	static public function exec($sCmd)
+	{
+		$process = proc_open(
+			$sCmd
+			, array(array("pipe","r"),array("pipe","w"),array("pipe","w"),)
+			, $arrPipes
+		) ;
+		return stream_get_contents($arrPipes[1]) ;
 	}
 }
 

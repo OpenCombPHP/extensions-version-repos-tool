@@ -36,14 +36,16 @@ function pullGit(repos,reposPath)
 <foreach for="$arrAllReposStatus" item='arrReposStatus' key='sReposName'>
 	<li>
 		<div>
-			[{=$arrReposStatus['type']}] {=$sReposName}: 
+			[{=$arrReposStatus['type']}] {=$arrReposStatus['title']}: 
 			<span class="ext-status-{=$arrReposStatus['status']}">{=$arrReposStatus['status']}</span>
 			
 			<if "!empty($arrReposStatus['detail'])">
 				<a href="javascript:jquery('#detail-pre-{=$sReposName}').toggle()">detail</a>
 			</if>
-			
-			<button id="btn-pull-{=$sReposName}" onclick="pullGit('{=$sReposName}','{=$arrReposStatus['path']}')">Pull</button>
+		</div>
+		
+		<div style="color:#aaaaaa">
+			安装路径：{=$arrReposStatus['folder']->url(false)}
 		</div>
 		
 		<div id="action-output-{=$sReposName}"></div>

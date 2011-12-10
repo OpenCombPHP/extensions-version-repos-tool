@@ -1,15 +1,13 @@
 <?php 
 namespace org\opencomb\development\repos ;
 
+use org\jecat\framework\lang\aop\AOP;
 use org\opencomb\ext\Extension ;
 
 class VersionReposTool extends Extension 
 {
-	/**
-	 * 载入扩展
-	 */
 	public function load()
 	{
-		// todo ...
+		AOP::singleton()->register('org\\opencomb\\development\\repos\\aspect\\ControlPanelFrameAspect') ;
 	}
 }
