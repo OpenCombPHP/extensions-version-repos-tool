@@ -60,10 +60,14 @@ class ReposStatus extends ControlPanel
 				chdir($arrStatus['folder']->url(false)) ;
 				$arrStatus['detail'] = `git status -s` ;
 				$arrStatus['status'] = empty($arrStatus['detail'])? 'clean': 'modified' ;
+				$arrStatus['unpush'] = preg_match("|# Your branch is ahead of '([\\w-_]+?)/([\\w-_]+?)' by (\\d+) commit.|", `git status`,$arrRes)?
+						array($arrRes[1].'/'.$arrRes[2] => (int)$arrRes[3]) : array() ;
 			}
 			else
 			{
 				$arrStatus['status'] = 'unknow' ;
+				$arrStatus['detail'] = '' ;
+				$arrStatus['unpush'] = array() ;
 			}
 		}
 		

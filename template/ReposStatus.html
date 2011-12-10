@@ -40,9 +40,22 @@ function pullGit(repos,reposPath)
 			<span class="ext-status-{=$arrReposStatus['status']}">{=$arrReposStatus['status']}</span>
 			
 			<if "!empty($arrReposStatus['detail'])">
-				<a href="javascript:jquery('#detail-pre-{=$sReposName}').toggle()">detail</a>
+				<a href="javascript:jquery('#detail-pre-{=$sReposName}').toggle()">详情</a>
 			</if>
 		</div>
+		
+		<if "!empty($arrReposStatus['unpush'])">
+		<table style='width:350px'>
+			<tr>
+				<td width='110'>尚未推送的提交：</td>
+				<td>
+					<foreach for="$arrReposStatus['unpush']" item='nCommits' key='sBranch'>
+					<div>{=$sBranch}: <span style="color:#CC0000">{=$nCommits}</span></div>
+					</foreach>
+				</td>
+			</tr>
+		</table>
+		</if>
 		
 		<div style="color:#aaaaaa">
 			安装路径：{=$arrReposStatus['folder']->url(false)}
