@@ -2,7 +2,7 @@
 namespace org\opencomb\development\repos ;
 
 use org\jecat\framework\lang\aop\AOP;
-use org\opencomb\ext\Extension ;
+use org\opencomb\platform\ext\Extension ;
 
 class VersionReposTool extends Extension 
 {

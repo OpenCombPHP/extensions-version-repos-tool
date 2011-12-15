@@ -3,8 +3,8 @@ namespace org\opencomb\development\repos ;
 
 use org\jecat\framework\fs\imp\LocalFolder;
 use org\jecat\framework\fs\FileSystem;
-use org\opencomb\ext\ExtensionMetainfo;
-use org\opencomb\ext\ExtensionManager;
+use org\opencomb\platform\ext\ExtensionMetainfo;
+use org\opencomb\platform\ext\ExtensionManager;
 use org\opencomb\coresystem\mvc\controller\ControlPanel;
 
 class ReposStatus extends ControlPanel
