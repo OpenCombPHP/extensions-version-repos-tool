@@ -6,7 +6,7 @@ return array(
 					'repos'=> array(
 							'title'=>'版本库状态' ,
 							'link' => '?c=org.opencomb.development.repos.ReposStatus' ,
-							'quote' => 'c=org.opencomb.development.repos.ReposStatus' ,
+							'query' => 'c=org.opencomb.development.repos.ReposStatus' ,
 					) ,
 			) ,
 		) ,
