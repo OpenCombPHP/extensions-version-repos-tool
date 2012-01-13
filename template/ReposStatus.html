@@ -14,7 +14,7 @@ function pullGit(repos,reposPath)
 	jquery('#btn-pull-'+repos).attr('disabled','disabled') ;
 	jquery('#action-output-'+repos).html('正在执行 git pull 操作……') ;
 
-	jquery.ajax( '?c=org.opencomb.development.repos.ReposAction&only_msg_queue=1&act=pull',{
+	jquery.ajax( '?c=org.opencomb.development.repos.ReposAction&rspn=msgqueue&act=pull',{
 		data: {
 			path: reposPath
 		}
