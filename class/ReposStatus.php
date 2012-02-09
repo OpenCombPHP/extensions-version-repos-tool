@@ -1,6 +1,8 @@
 <?php
 namespace org\opencomb\development\repos ;
 
+use org\opencomb\coresystem\auth\Id;
+
 use org\jecat\framework\fs\imp\LocalFolder;
 use org\jecat\framework\fs\FileSystem;
 use org\opencomb\platform\ext\ExtensionMetainfo;
@@ -12,14 +14,24 @@ class ReposStatus extends ControlPanel
 	public function createBeanConfig()
 	{
 		return array(
+			'title'=>'版本状态',
 			'view:statusView' => array(
-					'template' => 'ReposStatus.html'
-				) ,				
+				'template' => 'ReposStatus.html'
+			) ,
+			'perms' => array(
+				// 权限类型的许可
+				'perm.purview'=>array(
+					'namespace'=>'coresystem',
+					'name' => Id::PLATFORM_ADMIN,
+				) ,
+			) ,
 		) ;
 	}
 	
 	public function process()
 	{
+		$this->checkPermissions('您没有使用这个功能的权限,无法继续浏览',array()) ;
+		
 		$arrAllReposStatus['framework'] = array(
 				'type' => '框架' ,
 				'folder' => FileSystem::singleton()->findFolder('/framework') ,
