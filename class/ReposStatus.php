@@ -4,7 +4,7 @@ namespace org\opencomb\development\repos ;
 use org\opencomb\coresystem\auth\Id;
 
 use org\jecat\framework\fs\imp\LocalFolder;
-use org\jecat\framework\fs\FileSystem;
+use org\jecat\framework\fs\Folder;
 use org\opencomb\platform\ext\ExtensionMetainfo;
 use org\opencomb\platform\ext\ExtensionManager;
 use org\opencomb\coresystem\mvc\controller\ControlPanel;
@@ -34,14 +34,14 @@ class ReposStatus extends ControlPanel
 		
 		$arrAllReposStatus['framework'] = array(
 				'type' => '框架' ,
-				'folder' => FileSystem::singleton()->findFolder('/framework') ,
+				'folder' => Folder::singleton()->findFolder('/framework') ,
 				'title' => 'JeCat PHP Framework' ,
 		) ;
 		$this->gitStatus($arrAllReposStatus['framework']) ;
 			
 		$arrAllReposStatus['platform'] = array(
 				'type' => '平台' ,
-				'folder' => FileSystem::singleton()->findFolder('/') ,
+				'folder' => Folder::singleton()->findFolder('/') ,
 				'title' => '蜂巢' ,
 		) ;
 		$this->gitStatus($arrAllReposStatus['platform']) ;
@@ -53,7 +53,7 @@ class ReposStatus extends ControlPanel
 			
 			$sExtName = $aExtMeta->name() ;
 			$arrAllReposStatus[$sExtName]['type'] = '扩展' ;
-			$arrAllReposStatus[$sExtName]['folder'] = FileSystem::singleton()->findFolder($aExtMeta->installPath()) ;
+			$arrAllReposStatus[$sExtName]['folder'] = Folder::singleton()->findFolder($aExtMeta->installPath()) ;
 			$arrAllReposStatus[$sExtName]['title'] = $aExtMeta->title() ;
 			
 			$this->gitStatus($arrAllReposStatus[$sExtName]) ;
@@ -69,7 +69,7 @@ class ReposStatus extends ControlPanel
 			
 			if($arrStatus['folder'] instanceof LocalFolder)
 			{
-				chdir($arrStatus['folder']->url(false)) ;
+				chdir($arrStatus['folder']->path()) ;
 				$arrStatus['detail'] = `git status -s` ;
 				$arrStatus['status'] = empty($arrStatus['detail'])? 'clean': 'modified' ;
 				$arrStatus['unpush'] = preg_match("|# Your branch is ahead of '([\\w-_]+?)/([\\w-_]+?)' by (\\d+) commit.|", `git status`,$arrRes)?
