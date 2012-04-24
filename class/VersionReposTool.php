@@ -1,8 +1,7 @@
 <?php 
 namespace org\opencomb\development\repos ;
 
-use org\jecat\framework\lang\aop\AOP;
-use org\opencomb\platform\ext\Extension ;
+use org\opencomb\platform\ext\Extension;
 use org\opencomb\platform\mvc\view\widget\Menu;
 use org\jecat\framework\bean\BeanFactory;
 

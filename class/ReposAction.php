@@ -51,5 +51,3 @@ class ReposAction extends ControlPanel
 		return stream_get_contents($arrPipes[1]) ;
 	}
 }
-
-?>

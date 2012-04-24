@@ -2,7 +2,6 @@
 namespace org\opencomb\development\repos ;
 
 use org\opencomb\coresystem\auth\Id;
-
 use org\jecat\framework\fs\imp\LocalFolder;
 use org\jecat\framework\fs\Folder;
 use org\opencomb\platform\ext\ExtensionMetainfo;
@@ -90,5 +89,3 @@ class ReposStatus extends ControlPanel
 	}
 	
 }
-
-?>
