@@ -5,6 +5,9 @@
 	<version>0.1</version>
 	<title>版本管理</title>
 	
+	<description>
+Git 版本库状态显示工具，用来在网页中显示系统中各个版本库的状态。
+	</description>
  
 	<class>org.opencomb.development.repos.VersionReposTool</class>
 	<package folder="/class" namespace="org.opencomb.development.repos" />
@@ -12,5 +15,7 @@
 	<template folder="/template" />
 	
 	<beanFolder folder="/bean" />
+	
+	<require type="extension" item="coresystem"><![CDATA[ >=0.1 ]]></require>
 	
 </Extension>
