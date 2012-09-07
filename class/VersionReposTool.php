@@ -18,7 +18,7 @@ class VersionReposTool extends Extension
 		// 合并配置数组，增加菜单
 		BeanFactory::mergeConfig(
 				$arrConfig
-				, BeanFactory::singleton()->findConfig('widget/control-panel-frame-menu','mvc-merger')
+				, BeanFactory::singleton()->findConfig('widget/control-panel-frame-menu','version-repos-tool')
 		) ;
 	}
 }
